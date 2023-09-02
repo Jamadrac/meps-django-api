@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from base.models import *
-from .models import GPSData
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -15,7 +14,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 
 
-class GPSDataSerializer(serializers.ModelSerializer):
+class LocationDatataSerializer(serializers.ModelSerializer):
     class Meta:
-        model = GPSData
+        model = LocationData
         fields = '__all__'

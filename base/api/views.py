@@ -7,8 +7,8 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 
 from base.serializer import ProfileSerializer
 from rest_framework import viewsets
-from base.models import GPSData
-from base.serializer import GPSDataSerializer
+from base.models import LocationData
+from base.serializer import LocationDatataSerializer
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -41,21 +41,21 @@ def get_profile(request):
 
 
 
-# class GPSDataViewSet(viewsets.ModelViewSet):
-#     queryset = GPSData.objects.all()
-#     serializer_class = GPSDataSerializer
+# class LocationDataViewSet(viewsets.ModelViewSet):
+#     queryset = LocationData.objects.all()
+#     serializer_class = LocationDataSerializer
 
 
 
-class GPSDataViewSet(viewsets.ModelViewSet):
-    serializer_class = GPSDataSerializer
+class LocationDataViewSet(viewsets.ModelViewSet):
+    serializer_class = LocationDatataSerializer
 
     def get_queryset(self):
         # Filter the queryset to retrieve GPS data only for the authenticated user
         user = self.request.user  # Assuming you have authentication set up correctly
-        return GPSData.objects.filter(user=user)
+        return LocationData.objects.filter(user=user)
 
 # Manually specify the basename for the viewset
-gps_data_viewset = GPSDataViewSet.as_view({'get': 'list', 'post': 'create'})
+gps_data_viewset = LocationDataViewSet.as_view({'get': 'list', 'post': 'create'})
 
-# You can choose a meaningful basename, for example, 'gpsdata'
+# You can choose a meaningful basename, for example, 'LocationData'
