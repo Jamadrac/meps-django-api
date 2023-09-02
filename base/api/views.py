@@ -9,7 +9,11 @@ from base.serializer import ProfileSerializer
 from rest_framework import viewsets
 from base.models import LocationData
 from base.serializer import LocationDatataSerializer
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
 
+from base.models import LocationData
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
@@ -41,9 +45,24 @@ def get_profile(request):
 
 
 
-# class LocationDataViewSet(viewsets.ModelViewSet):
-#     queryset = LocationData.objects.all()
-#     serializer_class = LocationDataSerializer
+
+@api_view(['POST'])
+def receive_location_data(request):
+    try:
+        latitude = request.data['latitude']
+        longitude = request.data['longitude']
+        build_number = request.data['buildNumber']
+
+        # Save the received data to the database
+        LocationData.objects.create(
+            latitude=latitude,
+            longitude=longitude,
+            build_number=build_number,
+        )
+
+        return Response({'message': 'Location data received and stored successfully.'}, status=status.HTTP_201_CREATED)
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
 
