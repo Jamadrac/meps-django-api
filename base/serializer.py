@@ -14,7 +14,8 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 
 
-class LocationDatataSerializer(serializers.ModelSerializer):
+
+class LocationDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = LocationData
-        fields = '__all__'
+        fields = ['latitude', 'longitude', 'build_number', 'timestamp']
