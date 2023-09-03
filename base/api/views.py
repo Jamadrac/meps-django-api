@@ -3,12 +3,20 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
-
 from base.serializer import ProfileSerializer
 from rest_framework import generics
 from base.models import LocationData
 from base.serializer import LocationDataSerializer
 from rest_framework import status
+
+
+class LocationDataDetailView(generics.RetrieveAPIView):
+    queryset = LocationData.objects.all()
+    serializer_class = LocationDataSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user.profile.location_data
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -60,11 +68,3 @@ def receive_location_data(request):
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
-
-class LocationDataDetailView(generics.RetrieveAPIView):
-    queryset = LocationData.objects.all()
-    serializer_class = LocationDataSerializer
-    permission_classes = [IsAuthenticated]
-
-    def get_object(self):
-        return self.request.user.profile.location_data
