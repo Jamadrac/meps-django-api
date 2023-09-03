@@ -29,18 +29,23 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
-@api_view(['PUT'])  
+@api_view(['GET', 'PUT'])
 @permission_classes([IsAuthenticated])
 def get_profile(request):
     user = request.user
     profile = user.profile
-    serializer = ProfileSerializer(profile, data=request.data, partial=True)
-    if serializer.is_valid():
-        serializer.save()
+
+    if request.method == 'GET':
+        # Assuming you have a serializer called ProfileReadSerializer for GET requests.
+        serializer = ProfileReadSerializer(profile)
         return Response(serializer.data)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
+    elif request.method == 'PUT':
+        serializer = ProfileSerializer(profile, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 
