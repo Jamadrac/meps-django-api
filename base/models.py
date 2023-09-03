@@ -19,6 +19,6 @@ class Profile(models.Model):
     email = models.EmailField()
     location_data = models.OneToOneField(LocationData, on_delete=models.CASCADE, related_name='profile', null=True, blank=True)
 
-    def __str__(self):
+    def __str__(self): 
         return self.user.username
 
