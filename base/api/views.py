@@ -18,7 +18,7 @@ class LocationDataDetailView(generics.RetrieveAPIView):
     def get_object(self):
         return self.request.user.profile.location_data
 
-
+ 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
@@ -37,7 +37,7 @@ def get_profile(request):
 
     if request.method == 'GET':
         # Assuming you have a serializer called ProfileReadSerializer for GET requests.
-        serializer = ProfileReadSerializer(profile)
+        serializer = ProfileSerializer(profile)
         return Response(serializer.data)
 
     elif request.method == 'PUT':
